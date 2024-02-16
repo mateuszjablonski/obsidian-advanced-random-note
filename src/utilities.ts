@@ -7,7 +7,7 @@ import {
 } from "obsidian";
 import { v4 as uuidv4 } from "uuid";
 import AdvancedRandomNote from "./main";
-import { OPEN_TYPES, type Query } from "./types";
+import { OPEN_TYPES, RIBBON_ACTION_TYPES, type Query, type RibbonActionType } from "./types";
 
 export function moveElementInArray<T>(
 	arr: T[],
@@ -117,4 +117,20 @@ export function toRecord(arr: string[]): Record<string, string> {
 
 export function getOpenTypeLabels(): string[] {
 	return OPEN_TYPES.map((item) => item);
+}
+
+export function getRibbonActionTypeLabels(): string[] {
+	return RIBBON_ACTION_TYPES.map((item) => item);
+}
+
+export function updateRibbon(app: App, oldActionType: RibbonActionType, newActionType: RibbonActionType) {
+	// @ts-expect-error
+	const nativeAction = app.workspace.leftRibbon.items.find(
+		// @ts-expect-error
+		(i) => i.title === oldActionType
+	);
+	if (nativeAction) {
+		nativeAction.title = newActionType;
+		nativeAction.buttonEl.ariaLabel = newActionType;
+	}
 }

@@ -18,7 +18,7 @@ export const DEFAULT_SETTINGS: Settings = {
 	disabledFolders: "",
 	debug: false,
 	openType: "Active Leaf",
-	ribbonActionType: "Open random note",
+	ribbonActionType: "Open query modal",
 	setActive: true,
 };
 
@@ -69,7 +69,8 @@ export class SettingTab extends PluginSettingTab {
 			.setName("Disabled folders")
 			.setDesc("Skips these folders when searching for files.")
 			.addTextArea((text) => {
-				text.setPlaceholder("templates/")
+				text
+					.setPlaceholder("templates/")
 					.setValue(this.plugin.settings.disabledFolders)
 					.onChange(async (value) => {
 						this.plugin.settings.disabledFolders = value.trim();
